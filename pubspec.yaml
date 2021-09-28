@@ -1,0 +1,18 @@
+name: radial_chart
+description: A subset of fl_charts to implement Radial Charts
+version: 0.0.1
+homepage: https://concentechltd.co.uk
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  equatable: ^2.0.0
+  pedantic: ^1.11.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^1.0.0
