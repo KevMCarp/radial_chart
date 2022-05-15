@@ -34,9 +34,8 @@ class RadialChartData extends BaseChartData with EquatableMixin {
   final RadialTouchData radialTouchData;
 
   /// We hold this value to determine weight of each [RadialChartSectionData.value].
-  double get sumValue => sections
-      .map((data) => data.value)
-      .reduce((first, second) => first + second);
+  double get sumValue =>
+      sections.map((data) => data.value).reduce((first, second) => first + second);
 
   /// [RadialChart] draws some [sections] in a circle,
   /// and applies free space with radius [centerSpaceRadius],
@@ -101,12 +100,10 @@ class RadialChartData extends BaseChartData with EquatableMixin {
       return RadialChartData(
         borderData: FlBorderData.lerp(a.borderData, b.borderData, t),
         centerSpaceColor: Color.lerp(a.centerSpaceColor, b.centerSpaceColor, t),
-        centerSpaceRadius: lerpDoubleAllowInfinity(
-            a.centerSpaceRadius, b.centerSpaceRadius, t),
+        centerSpaceRadius: lerpDoubleAllowInfinity(a.centerSpaceRadius, b.centerSpaceRadius, t),
         radialTouchData: b.radialTouchData,
         sectionsSpace: lerpDouble(a.sectionsSpace, b.sectionsSpace, t),
-        startDegreeOffset:
-            lerpDouble(a.startDegreeOffset, b.startDegreeOffset, t),
+        startDegreeOffset: lerpDouble(a.startDegreeOffset, b.startDegreeOffset, t),
         sections: lerpRadialChartSectionDataList(a.sections, b.sections, t),
       );
     } else {
@@ -195,26 +192,18 @@ class RadialChartSectionData {
   /// [badgePositionPercentageOffset] to have your desire design,
   /// the value works the same way as [titlePositionPercentageOffset].
   RadialChartSectionData({
-    double? value,
-    Color? color,
-    double? radius,
-    bool? showTitle,
-    TextStyle? titleStyle,
+    this.value = 10,
+    this.color = Colors.cyan,
+    this.radius = 40,
+    this.showTitle = true,
+    this.titleStyle,
+    this.borderSide = const BorderSide(width: 0),
     String? title,
-    BorderSide? borderSide,
     Widget? badgeWidget,
-    double? titlePositionPercentageOffset,
-    double? badgePositionPercentageOffset,
-  })  : value = value ?? 10,
-        color = color ?? Colors.cyan,
-        radius = radius ?? 40,
-        showTitle = showTitle ?? true,
-        titleStyle = titleStyle,
-        title = title ?? value.toString(),
-        borderSide = borderSide ?? BorderSide(width: 0),
-        badgeWidget = badgeWidget ?? Container(),
-        titlePositionPercentageOffset = titlePositionPercentageOffset ?? 0.5,
-        badgePositionPercentageOffset = badgePositionPercentageOffset ?? 0.5;
+    this.titlePositionPercentageOffset = 0.5,
+    this.badgePositionPercentageOffset = 0.5,
+  })  : title = title ?? value.toString(),
+        badgeWidget = badgeWidget ?? Container();
 
   /// Coradials current [RadialChartSectionData] to a new [RadialChartSectionData],
   /// and replaces provided values.
@@ -247,21 +236,20 @@ class RadialChartSectionData {
   }
 
   /// Lerps a [RadialChartSectionData] based on [t] value, check [Tween.lerp].
-  static RadialChartSectionData lerp(
-      RadialChartSectionData a, RadialChartSectionData b, double t) {
+  static RadialChartSectionData lerp(RadialChartSectionData a, RadialChartSectionData b, double t) {
     return RadialChartSectionData(
-      value: lerpDouble(a.value, b.value, t),
-      color: Color.lerp(a.color, b.color, t),
-      radius: lerpDouble(a.radius, b.radius, t),
+      value: lerpDouble(a.value, b.value, t)!,
+      color: Color.lerp(a.color, b.color, t)!,
+      radius: lerpDouble(a.radius, b.radius, t)!,
       showTitle: b.showTitle,
       titleStyle: TextStyle.lerp(a.titleStyle, b.titleStyle, t),
       title: b.title,
       borderSide: BorderSide.lerp(a.borderSide, b.borderSide, t),
       badgeWidget: b.badgeWidget,
-      titlePositionPercentageOffset: lerpDouble(
-          a.titlePositionPercentageOffset, b.titlePositionPercentageOffset, t),
-      badgePositionPercentageOffset: lerpDouble(
-          a.badgePositionPercentageOffset, b.badgePositionPercentageOffset, t),
+      titlePositionPercentageOffset:
+          lerpDouble(a.titlePositionPercentageOffset, b.titlePositionPercentageOffset, t)!,
+      badgePositionPercentageOffset:
+          lerpDouble(a.badgePositionPercentageOffset, b.badgePositionPercentageOffset, t)!,
     );
   }
 }
@@ -356,8 +344,7 @@ class RadialTouchResponse extends BaseTouchResponse {
 
 /// It lerps a [RadialChartData] to another [RadialChartData] (handles animation for updating values)
 class RadialChartDataTween extends Tween<RadialChartData> {
-  RadialChartDataTween(
-      {required RadialChartData begin, required RadialChartData end})
+  RadialChartDataTween({required RadialChartData begin, required RadialChartData end})
       : super(begin: begin, end: end);
 
   /// Lerps a [RadialChartData] based on [t] value, check [Tween.lerp].

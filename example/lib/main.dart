@@ -7,7 +7,7 @@ import 'utils/platform_info.dart';
 void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final _controller = PageController(initialPage: 0);
   final _duration = const Duration(milliseconds: 300);
   final _curve = Curves.easeInOutCubic;
-  final _pages = [
+  final _pages = const [
     RadialChartPage(),
   ];
 
@@ -76,8 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   Visibility(
                     visible: _currentPage != 0,
                     child: FloatingActionButton(
-                      onPressed: () => _controller.previousPage(
-                          duration: _duration, curve: _curve),
+                      onPressed: () => _controller.previousPage(duration: _duration, curve: _curve),
                       child: const Icon(Icons.chevron_left_rounded),
                     ),
                   ),
@@ -85,8 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   Visibility(
                     visible: _currentPage != _pages.length - 1,
                     child: FloatingActionButton(
-                      onPressed: () => _controller.nextPage(
-                          duration: _duration, curve: _curve),
+                      onPressed: () => _controller.nextPage(duration: _duration, curve: _curve),
                       child: const Icon(Icons.chevron_right_rounded),
                     ),
                   ),

@@ -1,17 +1,14 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 
 import '../../../../radial_chart.dart';
-import 'base_chart_data.dart';
 
 /// It implements shared logics between our renderers such as touch/pointer events recognition, size, layout, ...
 abstract class RenderBaseChart<R extends BaseTouchResponse> extends RenderBox
     implements MouseTrackerAnnotation {
   /// It handles touch/pointer events flow and invokes [touchCallback] with [FlTouchEvent] and [BaseTouchResponse]
-  RenderBaseChart(BaseTouchCallback<R>? touchCallback)
-      : _touchCallback = touchCallback {
+  RenderBaseChart(BaseTouchCallback<R>? touchCallback) : _touchCallback = touchCallback {
     initGestureRecognizers();
   }
 
@@ -39,31 +36,27 @@ abstract class RenderBaseChart<R extends BaseTouchResponse> extends RenderBox
     _panGestureRecognizer = PanGestureRecognizer();
     _panGestureRecognizer.onDown =
         (dragDownDetails) => _notifyTouchEvent(FlPanDownEvent(dragDownDetails));
-    _panGestureRecognizer.onStart = (dragStartDetails) =>
-        _notifyTouchEvent(FlPanStartEvent(dragStartDetails));
-    _panGestureRecognizer.onUpdate = (dragUpdateDetails) =>
-        _notifyTouchEvent(FlPanUpdateEvent(dragUpdateDetails));
-    _panGestureRecognizer.onCancel =
-        () => _notifyTouchEvent(FlPanCancelEvent());
+    _panGestureRecognizer.onStart =
+        (dragStartDetails) => _notifyTouchEvent(FlPanStartEvent(dragStartDetails));
+    _panGestureRecognizer.onUpdate =
+        (dragUpdateDetails) => _notifyTouchEvent(FlPanUpdateEvent(dragUpdateDetails));
+    _panGestureRecognizer.onCancel = () => _notifyTouchEvent(FlPanCancelEvent());
     _panGestureRecognizer.onEnd =
         (dragEndDetails) => _notifyTouchEvent(FlPanEndEvent(dragEndDetails));
 
     _tapGestureRecognizer = TapGestureRecognizer();
     _tapGestureRecognizer.onTapDown =
         (tapDownDetails) => _notifyTouchEvent(FlTapDownEvent(tapDownDetails));
-    _tapGestureRecognizer.onTapCancel =
-        () => _notifyTouchEvent(FlTapCancelEvent());
-    _tapGestureRecognizer.onTapUp =
-        (tapUpDetails) => _notifyTouchEvent(FlTapUpEvent(tapUpDetails));
+    _tapGestureRecognizer.onTapCancel = () => _notifyTouchEvent(FlTapCancelEvent());
+    _tapGestureRecognizer.onTapUp = (tapUpDetails) => _notifyTouchEvent(FlTapUpEvent(tapUpDetails));
 
     _longPressGestureRecognizer = LongPressGestureRecognizer();
-    _longPressGestureRecognizer.onLongPressStart = (longPressStartDetails) =>
-        _notifyTouchEvent(FlLongPressStart(longPressStartDetails));
-    _longPressGestureRecognizer.onLongPressMoveUpdate =
-        (longPressMoveUpdateDetails) => _notifyTouchEvent(
-            FlLongPressMoveUpdate(longPressMoveUpdateDetails));
-    _longPressGestureRecognizer.onLongPressEnd = (longPressEndDetails) =>
-        _notifyTouchEvent(FlLongPressEnd(longPressEndDetails));
+    _longPressGestureRecognizer.onLongPressStart =
+        (longPressStartDetails) => _notifyTouchEvent(FlLongPressStart(longPressStartDetails));
+    _longPressGestureRecognizer.onLongPressMoveUpdate = (longPressMoveUpdateDetails) =>
+        _notifyTouchEvent(FlLongPressMoveUpdate(longPressMoveUpdateDetails));
+    _longPressGestureRecognizer.onLongPressEnd =
+        (longPressEndDetails) => _notifyTouchEvent(FlLongPressEnd(longPressEndDetails));
   }
 
   @override
@@ -108,8 +101,7 @@ abstract class RenderBaseChart<R extends BaseTouchResponse> extends RenderBox
 
   /// Here we handle mouse hover exit event
   @override
-  PointerExitEventListener? get onExit =>
-      (event) => _notifyTouchEvent(FlPointerExitEvent(event));
+  PointerExitEventListener? get onExit => (event) => _notifyTouchEvent(FlPointerExitEvent(event));
 
   /// Invokes the [_touchCallback] to notify listeners of this [FlTouchEvent]
   ///

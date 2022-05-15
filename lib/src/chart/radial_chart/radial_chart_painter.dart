@@ -11,10 +11,7 @@ import 'radial_chart_data.dart';
 
 /// Paints [RadialChartData] in the canvas, it can be used in a [CustomPainter]
 class RadialChartPainter extends BaseChartPainter<RadialChartData> {
-  late Paint _sectionPaint,
-      _sectionStrokePaint,
-      _sectionsSpaceClearPaint,
-      _centerSpacePaint;
+  late Paint _sectionPaint, _sectionStrokePaint, _sectionsSpaceClearPaint, _centerSpacePaint;
 
   /// Paints [data] into canvas, it is the animating [RadialChartData],
   /// [targetData] is the animation's target and remains the same
@@ -31,7 +28,7 @@ class RadialChartPainter extends BaseChartPainter<RadialChartData> {
 
     _sectionsSpaceClearPaint = Paint()
       ..style = PaintingStyle.fill
-      ..color = const Color(0x000000000)
+      ..color = const Color(0x00000000)
       ..blendMode = BlendMode.srcOut;
 
     _centerSpacePaint = Paint()..style = PaintingStyle.fill;
@@ -39,8 +36,8 @@ class RadialChartPainter extends BaseChartPainter<RadialChartData> {
 
   /// Paints [RadialChartData] into the provided canvas.
   @override
-  void paint(BuildContext context, CanvasWrapper canvasWrapper,
-      PaintHolder<RadialChartData> holder) {
+  void paint(
+      BuildContext context, CanvasWrapper canvasWrapper, PaintHolder<RadialChartData> holder) {
     super.paint(context, canvasWrapper, holder);
     final data = holder.data;
     if (data.sections.isEmpty) {
@@ -55,23 +52,21 @@ class RadialChartPainter extends BaseChartPainter<RadialChartData> {
     _drawTexts(context, canvasWrapper, holder, centerRadius);
   }
 
-  List<double> _calculateSectionsAngle(
-      List<RadialChartSectionData> sections, double sumValue) {
+  List<double> _calculateSectionsAngle(List<RadialChartSectionData> sections, double sumValue) {
     return sections.map((section) {
       return 360 * (section.value / sumValue);
     }).toList();
   }
 
-  void _drawCenterSpace(CanvasWrapper canvasWrapper, double centerRadius,
-      PaintHolder<RadialChartData> holder) {
+  void _drawCenterSpace(
+      CanvasWrapper canvasWrapper, double centerRadius, PaintHolder<RadialChartData> holder) {
     final data = holder.data;
     final viewSize = canvasWrapper.size;
     final centerX = viewSize.width / 2;
     final centerY = viewSize.height / 2;
 
     _centerSpacePaint.color = data.centerSpaceColor;
-    canvasWrapper.drawCircle(
-        Offset(centerX, centerY), centerRadius, _centerSpacePaint);
+    canvasWrapper.drawCircle(Offset(centerX, centerY), centerRadius, _centerSpacePaint);
   }
 
   void _drawSections(
@@ -81,14 +76,12 @@ class RadialChartPainter extends BaseChartPainter<RadialChartData> {
     PaintHolder<RadialChartData> holder,
   ) {
     final data = holder.data;
-    final shouldDrawSeparators =
-        data.sectionsSpace != 0 && data.sections.length > 1;
+    final shouldDrawSeparators = data.sectionsSpace != 0 && data.sections.length > 1;
 
     final viewSize = canvasWrapper.size;
 
     if (shouldDrawSeparators) {
-      canvasWrapper.saveLayer(
-          Rect.fromLTWH(0, 0, viewSize.width, viewSize.height), Paint());
+      canvasWrapper.saveLayer(Rect.fromLTWH(0, 0, viewSize.width, viewSize.height), Paint());
     }
 
     final center = Offset(viewSize.width / 2, viewSize.height / 2);
@@ -116,8 +109,7 @@ class RadialChartPainter extends BaseChartPainter<RadialChartData> {
         _sectionPaint.color = section.color;
         _sectionPaint.strokeWidth = section.radius;
         _sectionPaint.style = PaintingStyle.stroke;
-        canvasWrapper.drawCircle(
-            center, centerRadius + section.radius / 2, _sectionPaint);
+        canvasWrapper.drawCircle(center, centerRadius + section.radius / 2, _sectionPaint);
         return;
       }
 
@@ -125,14 +117,12 @@ class RadialChartPainter extends BaseChartPainter<RadialChartData> {
       final sweepRadians = radians(sectionDegree);
       final endRadians = startRadians + sweepRadians;
 
-      final startLineDirection =
-          Offset(math.cos(startRadians), math.sin(startRadians));
+      final startLineDirection = Offset(math.cos(startRadians), math.sin(startRadians));
       final startLineFrom = center + startLineDirection * centerRadius;
       final startLineTo = startLineFrom + startLineDirection * section.radius;
       final startLine = Line(startLineFrom, startLineTo);
 
-      final endLineDirection =
-          Offset(math.cos(endRadians), math.sin(endRadians));
+      final endLineDirection = Offset(math.cos(endRadians), math.sin(endRadians));
       final endLineFrom = center + endLineDirection * centerRadius;
       final endLineTo = endLineFrom + endLineDirection * section.radius;
       final endLine = Line(endLineFrom, endLineTo);
@@ -151,10 +141,8 @@ class RadialChartPainter extends BaseChartPainter<RadialChartData> {
       _sectionPaint.style = PaintingStyle.fill;
       canvasWrapper.drawPath(sectionPath, _sectionPaint);
 
-      if (section.borderSide.width != 0.0 &&
-          section.borderSide.color.opacity != 0.0) {
-        canvasWrapper.saveLayer(
-            Rect.fromLTWH(0, 0, viewSize.width, viewSize.height), Paint());
+      if (section.borderSide.width != 0.0 && section.borderSide.color.opacity != 0.0) {
+        canvasWrapper.saveLayer(Rect.fromLTWH(0, 0, viewSize.width, viewSize.height), Paint());
         canvasWrapper.clipPath(sectionPath);
 
         _sectionStrokePaint.strokeWidth = section.borderSide.width * 2;
@@ -229,15 +217,12 @@ class RadialChartPainter extends BaseChartPainter<RadialChartData> {
 
       final sectionsStartTo = center +
           Offset(
-            math.cos(radians(startAngle)) *
-                (centerRadius + section.radius + extraLineSize),
-            math.sin(radians(startAngle)) *
-                (centerRadius + section.radius + extraLineSize),
+            math.cos(radians(startAngle)) * (centerRadius + section.radius + extraLineSize),
+            math.sin(radians(startAngle)) * (centerRadius + section.radius + extraLineSize),
           );
 
       _sectionsSpaceClearPaint.strokeWidth = data.sectionsSpace;
-      canvasWrapper.drawLine(
-          sectionsStartFrom, sectionsStartTo, _sectionsSpaceClearPaint);
+      canvasWrapper.drawLine(sectionsStartFrom, sectionsStartTo, _sectionsSpaceClearPaint);
       // canvasWrapper.
       tempAngle += sweepAngle;
     });
@@ -277,8 +262,7 @@ class RadialChartPainter extends BaseChartPainter<RadialChartData> {
                 (centerRadius + (section.radius * percentageOffset)),
           );
 
-      final sectionCenterOffsetTitle =
-          sectionCenter(section.titlePositionPercentageOffset);
+      final sectionCenterOffsetTitle = sectionCenter(section.titlePositionPercentageOffset);
 
       if (section.showTitle) {
         final span = TextSpan(
@@ -292,22 +276,19 @@ class RadialChartPainter extends BaseChartPainter<RadialChartData> {
             textScaleFactor: holder.textScale);
 
         tp.layout();
-        canvasWrapper.drawText(
-            tp, sectionCenterOffsetTitle - Offset(tp.width / 2, tp.height / 2));
+        canvasWrapper.drawText(tp, sectionCenterOffsetTitle - Offset(tp.width / 2, tp.height / 2));
       }
 
       tempAngle += sweepAngle;
     }
   }
 
-  double _calculateCenterRadius(
-      Size viewSize, PaintHolder<RadialChartData> holder) {
+  double _calculateCenterRadius(Size viewSize, PaintHolder<RadialChartData> holder) {
     final data = holder.data;
     if (data.centerSpaceRadius.isFinite) {
       return data.centerSpaceRadius;
     }
-    final maxRadius =
-        data.sections.reduce((a, b) => a.radius > b.radius ? a : b).radius;
+    final maxRadius = data.sections.reduce((a, b) => a.radius > b.radius ? a : b).radius;
     return (viewSize.shortestSide - (maxRadius * 2)) / 2;
   }
 
@@ -366,8 +347,7 @@ class RadialChartPainter extends BaseChartPainter<RadialChartData> {
       final space = data.sectionsSpace / 2;
       final fromDegree = tempAngle + space;
       final toDegree = sectionAngle + tempAngle - space;
-      final isInDegree =
-          relativeTouchAngle >= fromDegree && relativeTouchAngle <= toDegree;
+      final isInDegree = relativeTouchAngle >= fromDegree && relativeTouchAngle <= toDegree;
 
       /// radius criteria
       final centerRadius = _calculateCenterRadius(viewSize, holder);
@@ -383,13 +363,11 @@ class RadialChartPainter extends BaseChartPainter<RadialChartData> {
       tempAngle += sectionAngle;
     }
 
-    return RadialTouchedSection(
-        foundSectionData, foundSectionDataPosition, touchAngle, touchR);
+    return RadialTouchedSection(foundSectionData, foundSectionDataPosition, touchAngle, touchR);
   }
 
   /// Exposes offset for laying out the badge widgets upon the chart.
-  Map<int, Offset> getBadgeOffsets(
-      Size viewSize, PaintHolder<RadialChartData> holder) {
+  Map<int, Offset> getBadgeOffsets(Size viewSize, PaintHolder<RadialChartData> holder) {
     final data = holder.data;
     final center = viewSize.center(Offset.zero);
     final badgeWidgetsOffsets = <int, Offset>{};
@@ -417,8 +395,7 @@ class RadialChartPainter extends BaseChartPainter<RadialChartData> {
                 (centerRadius + (section.radius * percentageOffset)),
           );
 
-      final sectionCenterOffsetBadgeWidget =
-          sectionCenter(section.badgePositionPercentageOffset);
+      final sectionCenterOffsetBadgeWidget = sectionCenter(section.badgePositionPercentageOffset);
 
       badgeWidgetsOffsets[i] = sectionCenterOffsetBadgeWidget;
 

@@ -18,9 +18,11 @@ class RadialChart extends ImplicitlyAnimatedWidget {
   /// which default is [Curves.linear].
   const RadialChart(
     this.data, {
-    Duration swapAnimationDuration = defaultDuration,
-    Curve swapAnimationCurve = Curves.linear,
-  }) : super(duration: swapAnimationDuration, curve: swapAnimationCurve);
+    super.key,
+    super.duration = defaultDuration,
+    super.curve = Curves.linear,
+  });
+  // }) : super(duration: swapAnimationDuration, curve: swapAnimationCurve);
 
   /// Creates a [_RadialChartState]
   @override
@@ -35,7 +37,7 @@ class _RadialChartState extends AnimatedWidgetBaseState<RadialChart> {
   @override
   void initState() {
     /// Make sure that [_widgetsPositionHandler] is updated.
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
         setState(() {});
       }

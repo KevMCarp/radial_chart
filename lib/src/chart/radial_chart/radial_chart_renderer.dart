@@ -1,6 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 
@@ -24,8 +22,7 @@ class RadialChartLeaf extends MultiChildRenderObjectWidget {
   final RadialChartData data, targetData;
 
   @override
-  RenderRadialChart createRenderObject(BuildContext context) =>
-      RenderRadialChart(
+  RenderRadialChart createRenderObject(BuildContext context) => RenderRadialChart(
         context,
         data,
         targetData,
@@ -33,8 +30,7 @@ class RadialChartLeaf extends MultiChildRenderObjectWidget {
       );
 
   @override
-  void updateRenderObject(
-      BuildContext context, RenderRadialChart renderObject) {
+  void updateRenderObject(BuildContext context, RenderRadialChart renderObject) {
     renderObject
       ..data = data
       ..targetData = targetData

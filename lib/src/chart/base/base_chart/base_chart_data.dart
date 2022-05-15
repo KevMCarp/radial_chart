@@ -20,9 +20,8 @@ abstract class BaseChartData with EquatableMixin {
   /// [touchData] defines the touch behavior and responses.
   BaseChartData({
     FlBorderData? borderData,
-    required FlTouchData touchData,
-  })  : borderData = borderData ?? FlBorderData(),
-        touchData = touchData;
+    required this.touchData,
+  }) : borderData = borderData ?? FlBorderData();
 
   BaseChartData lerp(BaseChartData a, BaseChartData b, double t);
 
@@ -78,7 +77,7 @@ class FlTouchData with EquatableMixin {
   final bool enabled;
 
   /// You can disable or enable the touch system using [enabled] flag,
-  FlTouchData(bool enabled) : enabled = enabled;
+  FlTouchData(this.enabled);
 
   /// Used for equality check, see [EquatableMixin].
   @override
@@ -106,16 +105,13 @@ class FlClipData with EquatableMixin {
   FlClipData.all() : this(top: true, bottom: true, left: true, right: true);
 
   /// Creates data that clips only top and bottom side
-  FlClipData.vertical()
-      : this(top: true, bottom: true, left: false, right: false);
+  FlClipData.vertical() : this(top: true, bottom: true, left: false, right: false);
 
   /// Creates data that clips only left and right side
-  FlClipData.horizontal()
-      : this(top: false, bottom: false, left: true, right: true);
+  FlClipData.horizontal() : this(top: false, bottom: false, left: true, right: true);
 
   /// Creates data that doesn't clip any side
-  FlClipData.none()
-      : this(top: false, bottom: false, left: false, right: false);
+  FlClipData.none() : this(top: false, bottom: false, left: false, right: false);
 
   /// Checks whether any of the sides should be clipped
   bool get any => top || bottom || left || right;
@@ -139,8 +135,7 @@ String defaultGetTitle(double value) {
 ///
 /// If you return null, we try to provide an inherited TextStyle using theme.
 /// (you can customize a specific title using this).
-typedef GetTitleTextStyleFunction = TextStyle? Function(
-    BuildContext context, double value);
+typedef GetTitleTextStyleFunction = TextStyle? Function(BuildContext context, double value);
 
 /// The default [SideTitles.getTextStyles] function.
 ///
@@ -148,8 +143,7 @@ typedef GetTitleTextStyleFunction = TextStyle? Function(
 TextStyle? defaultGetTitleTextStyle(BuildContext context, double value) => null;
 
 /// Chart's touch callback.
-typedef BaseTouchCallback<R extends BaseTouchResponse> = void Function(
-    FlTouchEvent, R?);
+typedef BaseTouchCallback<R extends BaseTouchResponse> = void Function(FlTouchEvent, R?);
 
 /// This class holds the touch response details of charts.
 abstract class BaseTouchResponse {

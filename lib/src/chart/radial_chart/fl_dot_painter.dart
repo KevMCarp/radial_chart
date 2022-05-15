@@ -21,9 +21,7 @@ class FlSpot with EquatableMixin {
   ///
   /// [y] determines cartesian (axis based) vertically position
   /// 0 means most bottom point of the chart
-  FlSpot(double x, double y)
-      : x = x,
-        y = y;
+  FlSpot(this.x, this.y);
 
   /// Copies current [FlSpot] to a new [FlSpot],
   /// and replaces provided values.

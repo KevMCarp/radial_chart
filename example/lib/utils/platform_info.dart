@@ -34,4 +34,5 @@ class PlatformInfo {
   }
 }
 
+// ignore: constant_identifier_names
 enum PlatformType { Web, iOS, Android, MacOS, Fuchsia, Linux, Windows, Unknown }
